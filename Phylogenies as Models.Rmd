@@ -1,0 +1,35 @@
+---
+title: "Shiny Template"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("shiny")
+```
+```{r}
+library(shiny)
+```
+
+User interface: Building the web doc 
+```{r}
+ui <- fluidPage(
+  #App Title ---
+  titlePanel("Phylotastic Educational Resources")
+  
+)
+```
+
+Instructions for the server
+```{r}
+server <- function(input, output) {}
+```
+
+knitting UI and Server instructions
+```{r}
+shinyApp(ui = ui, server=server)
+```
+
