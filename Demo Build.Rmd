@@ -1,0 +1,32 @@
+---
+title: "Shiny Template"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(shiny)
+library(rphylotastic)
+```
+
+User interface: Building the web doc 
+```{r}
+
+ui <- fluidPage(titlePanel("Phylotastic Educational Resources"), tags$br(), h3("I want to"), tags$br(),actionButton("phylo", "Choose Among Previously Constructed Phylogenies"), tags$br(), actionButton("own", "Choose My Own Organisms!"))
+  
+```
+
+Instructions for the server
+```{r}
+server <- function(input,output) {observeEvent(input$phylo, {output$ui <- renderUI({is.null(input$radioButtons("dynamic", "Dynamic", choices = c("By State"="option1", "Popular Mammals"="option 2"), selected = "option 1"))})}
+```
+
+knitting UI and Server instructions
+```{r}
+shinyApp(ui = ui, server=server)
+```
+
