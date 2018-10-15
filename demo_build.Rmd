@@ -12,85 +12,90 @@ knitr::opts_chunk$set(echo = TRUE)
 library(shiny)
 library(rphylotastic)
 library(datelife)
-library(ggplot2)
-library(maps)
 ```
-Create the data frame of the map. This data frame contains the longitude and latitude of state boarders on the map
 ```{r}
-usaMap <- map_data("state")
-```
+#Need to add instructions
+ui <- fluidPage(
+    tags$style(
+HTML(".shiny-input-container:not(.shiny-input-container-inline) {
+[width: 100%;
+                    }")
+),
+## to add google analytics: tags$head(includeScript("google-analytics.js"))
+h1("Phylotastic Educational Resources"), #page title, want to change to .png
+h2("Phylogenies of State Symbols"),
+selectInput(
+                inputId = "state", 
+                label = "Select the state:", 
+                c("Alabama",
+                  "Alaska",
+                  "Arizona",
+                  "Arkansas",
+                  "California",
+                  "Colorado",
+                  "Connecticut",
+                  "Delaware",
+                  "Florida",
+                  "Georgia",
+                  "Hawaii",
+                  "Idaho",
+                  "Illinois",
+                  "Indiana",
+                  "Iowa",
+                  "Kansas",
+                  "Kentucky",
+                  "Louisiana",
+                  "Maine",
+                  "Maryland",
+                  "Massachusetts",
+                  "Michigan",
+                  "Minnesota",
+                  "Mississippi",
+                  "Missouri",
+                  "Montana",
+                  "Nebraska",
+                  "Nevada",
+                  "New Hampshire",
+                  "New Jersey",
+                  "New Mexico",
+                  "New York",
+                  "North Carolina",
+                  "North Dakota",
+                  "Ohio",
+                  "Oklahoma",
+                  "Oregon",
+                  "Pennsylvania",
+                  "Rhode Island",
+                  "South Carolina",
+                  "South Dakota",
+                  "Tennessee",
+                  "Texas",
+                  "Utah",
+                  "Vermont",
+                  "Virginia",
+                  "Washington",
+                  "West Virginia",
+                  "Wisconsin",
+                  "Wyoming"
+                  ),
+                multiple = FALSE), #user can only select one state
+actionButton(inputId = "get", label = "Get Tree", class = "btn btn-primary"))
 
-Define a function which finds which state a point is in. Takes input from click and gives the name of the state being clicked
-```{r}
-which_state <- function(mapData, long, lat) {
-    #identifies the state being clicked
-    #
-    #Args
-    # mapData: has colums "long" and "lat" to id state borders
-    # long,lat: longitude and latitude of clicked point. = input$clickMap$x and input$clickMap$y if click = "clickMap".
-    #
-    #Returns:
-    # The name of the state containing the point (long,lat).
-    
-    #calculate the diff in long and lat of the border with respect to this point
-    mapData$long_diff <- mapData$long - long
-    mapData$lat_diff <- mapData$lat - lat
-    
-    #only compare borders near the clicked point to save computing time
-    mapData <- mapData[abs(mapData$long_diff) < 20 & abs(mapData$lat_diff) < 15, ]
-    
-    #calculate the angle btwn the vector from this clicked point to border and c(1,0)
-    vLong <- mapData$long_diff
-    vLat <- mapData$lat_diff
-    mapData$angle <- acos(vLong / sqrt(vLong^2 + vlat^2))
-    
-    #calculate range of the angle and select the state with largest range
-    rangeAngle <- tapply(mapData$angle, mapData$region, function(x) max(x) - min(x))
-    return(names(sort(rangeAngle, decreasing = TRUE)))
-}
-```
-
-```{r}
-plotMap <- ggplot(usaMap, aes(x=long, y=lat, group = group)) + geom_polygon(fill="white", color = "black")
-```
-```{r}
-plotMap
-```
-
-
-```{r}
-#Need to add title and instructions
-ui <- shinyUI(fluidPage(
-    column(
-        width = 6,
-        plotOutput("map", click = "plot_click", width = 600, height = 400)
-    )
-))
-#add hover and make click link to state app once I get this working: hover = hoverMap
 ```
 
 Instructions for the server
 ```{r}
-server <- shinyServer(function(input,output) {
-    output$map <- renderPlot({
-        plotMap
-    })
-}) 
+server <- function(input, output) {}
 
-observeEvent(input$plot_click, {
-    xClick <- input$plot_click$x
-    yClick <- input$plot_click$y
-    state <- which_state(useMap, xClick, yClick)
-    output$map <- renderPlot(
-        plotMap +
-            geom_polygon(data = usaMap[usaMap$region == state,], fill = "yellow")+
-            annotate("text", x = xClick, y = yClick, lable = state, color = "red")
-    )
-})
 ```
 
-knitting UI and Server instructions
+
 ```{r}
 shinyApp(ui = ui, server=server)
 ```
+
+
+
+
+
 
