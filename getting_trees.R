@@ -15,11 +15,9 @@ source_tree <- c("Open Tree of Life")
 library(ape)
 #par = set or query graphical parameters
 #xpd = plotting parameter
-par(xpd = FALSE, mfrow = c(1, length(WV_phy1)), mai = c(0.1, 0.1, 0.5, 0.1), oma = c(0, 1, 2, 1))
-for (i in 1:length(WV_phy1)){
-    plot(ladderize(WV_phy1))
-    mtext(paste("from", source_tree[i]), cex = 1, side = 3, line = 1)
-}
+par(xpd = FALSE, mfrow = c(1,1), mai = c(0.1, 0.1, 0.5, 0.1), oma = c(0, 1, 2, 1))
+plot(ladderize(WV_phy1))
+mtext(paste("from", source_tree[i]), cex = 1, side = 3, line = 1)
 mtext("West Virginia State Symbols", outer = T, side = 3, cex = 1.5, line = 0)
 
 
