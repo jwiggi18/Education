@@ -6,7 +6,7 @@ library(shinydashboard)
 #Need to add instructions 
 
 #adding image to the header
-title <- tags$a(href ='phylotastic.org',
+title <- tags$a(href='http://phylotastic.org',
                 tags$img(src="PER.jpg", height = '50', width = '200'))
 
 #ui code starts here
@@ -20,7 +20,6 @@ ui <- fluidPage(
     ## to add google analytics: tags$head(includeScript("google-analytics.js"))
     #tags$a(href='phylotastic.org'),
         dashboardHeader(title = title, titleWidth = 225),
-        #tags$img(src='PER.png')), #page title, want to change to .png but this isn't working
         dashboardSidebar(
             sidebarMenu(menuItem(
                 selectInput(inputId = "state",
