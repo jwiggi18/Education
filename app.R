@@ -34,13 +34,22 @@ ui <- fluidPage(
                               "Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota",
                               "Tennessee","Texas","Utah","Vermont","Virginia","Washington",
                               "West Virginia","Wisconsin","Wyoming"),multiple = FALSE)))),#user can only select one state,
-        dashboardBody()
+        dashboardBody(uiOutput("img"))
         )
     )
 
     
   
 
-server <- function(input, output) {}
+server <- function(input, output) {
+    output$img <- renderUI({
+        if(input$state == "Oklahoma"){
+            img(height = 240, width = 300, src = "OK_phylo.png")
+        }
+        else if(input$state == "West Virginia"){
+            img(height = 240, width = 300, src = "WV_phylo.png")
+            }
+        })
+}
 
 shinyApp(ui = ui, server=server)
