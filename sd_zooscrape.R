@@ -25,30 +25,28 @@ get_san_diego_zoo_animals <- function() {
 }
 
 taxa <- get_san_diego_zoo_animals()
-
+#filter by those entries that contain a space to retrieve binomial names (species names)
+taxa <- taxa[grepl(" ", taxa)]
 View(taxa)
 
 library(taxize)
 
-# tried to filter taxa to only species names... many spcies names have a genus name as the second part of the binomen
-# e.g. Schizocaena arthropoda so I get an error (More than one TSN found for taxon 'Arthropoda'!)
-
-out <- list()
-for(i in 1:length(taxa)){
-    out[[i]] <- tax_name(taxa[i], get = "species")
-}
-out2 <- plyr::ldply(out, data.frame)
-taxa[-which(is.na(out2$species))]
-
-#Tried finding accepted names first then filtering
 #find accepted names
 #data_source_ids, 3 = ITIS, 12 = EOL
-gnr_taxa <- gnr_resolve(names = taxa, data_source_ids = c(3,12), stripauthority = T) #stripauthority isn't removing author and year info
+gnr_taxa <- taxize::gnr_resolve(names = taxa, data_source_ids = c(3,12), best_match_only = TRUE, canonical = TRUE) 
 #View output
 View(gnr_taxa)
 
-nrow(gnr_taxa) #2131
+gnr_vector <- gnr_taxa$matched_name2
 
-#matched name produces duplicates but with year, subspecies(?), or a number in parentheses
-gnr_taxa[!duplicated(gnr_taxa$matched_name),c("user_supplied_name", "matched_name")]
+sd_phy <- taxa_get_otol_tree(taxa = gnr_vector) #returns error
 
+source_tree <- c("Open Tree of Life")
+
+library(ape)
+#par = set or query graphical parameters
+#xpd = plotting parameter
+par(xpd = FALSE, mfrow = c(1,1), mai = c(0.1, 0.1, 0.5, 0.1), oma = c(0, 1, 2, 1))
+plot(ladderize(sd_phy))
+mtext(paste("from", source_tree[i]), cex = 1, side = 3, line = 1)
+mtext("San Diego Zoo Animals", outer = T, side = 3, cex = 1.5, line = 0)
