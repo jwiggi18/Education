@@ -32,8 +32,8 @@ View(taxa)
 library(taxize)
 
 #find accepted names
-#data_source_ids, 3 = ITIS, 12 = EOL
-gnr_taxa <- taxize::gnr_resolve(names = taxa, data_source_ids = c(3,12), best_match_only = TRUE, canonical = TRUE) 
+#data_source_ids, 179 = Open Tree of Life reference taxonomy
+gnr_taxa <- taxize::gnr_resolve(names = taxa, data_source_ids = 179, best_match_only = TRUE, canonical = TRUE) 
 #View output
 View(gnr_taxa)
 
