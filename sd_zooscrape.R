@@ -39,11 +39,19 @@ View(gnr_taxa)
 
 gnr_vector <- gnr_taxa$matched_name2 #the string is too long so write.csv
 
-write.csv(gnr_vector, file = "sd_names.csv")
+#file_get_scientific_names does not appear to support .csv files
+#stuff I tried that didn't work
 
-sd_names <- read.csv("sd_names.csv")
+# write.csv(gnr_vector, file = "sd_names.csv")
+# sd_names <- read.csv("sd_names.csv")
+# sd_phy <- taxa_get_otol_tree(taxa = sd_names) #returns error
+# sd_names <- file_get_scientific_names(file_name = "sd_names.csv") #returns list of length zero
 
-sd_phy <- taxa_get_otol_tree(taxa = sd_names) #returns error
+write.table(gnr_vector, "sd_names.txt", sep="\t")
+
+sd_names <- file_get_scientific_names(file_name = "sd_names.txt")
+        
+sd_phy <- taxa_get_otol_tree(taxa = sd_names) #still running into error
 
 source_tree <- c("Open Tree of Life")
 
