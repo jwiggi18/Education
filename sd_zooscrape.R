@@ -37,9 +37,13 @@ gnr_taxa <- taxize::gnr_resolve(names = taxa, data_source_ids = 179, best_match_
 #View output
 View(gnr_taxa)
 
-gnr_vector <- gnr_taxa$matched_name2
+gnr_vector <- gnr_taxa$matched_name2 #the string is too long so write.csv
 
-sd_phy <- taxa_get_otol_tree(taxa = gnr_vector) #returns error
+write.csv(gnr_vector, file = "sd_names.csv")
+
+sd_names <- read.csv("sd_names.csv")
+
+sd_phy <- taxa_get_otol_tree(taxa = sd_names) #returns error
 
 source_tree <- c("Open Tree of Life")
 
