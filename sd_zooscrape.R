@@ -1,5 +1,11 @@
 #learning to scrape a zoo website
 
+
+library(devtools)
+install_github("phylotastic/datelife")
+library(datelife)
+
+
 library(rvest)
 library(rphylotastic)
 
@@ -37,21 +43,11 @@ gnr_taxa <- taxize::gnr_resolve(names = taxa, data_source_ids = 179, best_match_
 #View output
 View(gnr_taxa)
 
-gnr_vector <- gnr_taxa$matched_name2 #the string is too long so write.csv
+gnr_vector <- gnr_taxa$matched_name2 
 
-#file_get_scientific_names does not appear to support .csv files
-#stuff I tried that didn't work
 
-# write.csv(gnr_vector, file = "sd_names.csv")
-# sd_names <- read.csv("sd_names.csv")
-# sd_phy <- taxa_get_otol_tree(taxa = sd_names) #returns error
-# sd_names <- file_get_scientific_names(file_name = "sd_names.csv") #returns list of length zero
-
-write.table(gnr_vector, "sd_names.txt", sep="\t")
-
-sd_names <- file_get_scientific_names(file_name = "sd_names.txt")
-        
-sd_phy <- taxa_get_otol_tree(taxa = sd_names) #still running into error
+# Luna's work around       
+sd_phy <- get_otol_synthetic_tree(gnr_vector)
 
 source_tree <- c("Open Tree of Life")
 
