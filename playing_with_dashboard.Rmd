@@ -1,0 +1,41 @@
+---
+title: "Demo Build"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+title: "Shiny Template"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(shiny)
+library(rphylotastic)
+library(shinydashboard)
+```
+
+User interface: Building the web doc 
+```{r}
+
+ui <- dashboardPage(dashboardHeader(title = "Phylotastic"), dashboardSidebar(disable = T), dashboardBody(actionButton("previous", "Select from previously constructed phylogenies"), (actionButton("own", "Choose my own organisms!"))))
+  
+```
+
+Instructions for the server
+```{r}
+server <- function(input,output) {}
+```
+
+knitting UI and Server instructions
+```{r}
+shinyApp(ui = ui, server=server)
+```

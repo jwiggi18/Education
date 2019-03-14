@@ -1,0 +1,5 @@
+Scraped
+
+[1] "Carnegiea gigantea"   "Parkinsonia florida"  "Hyla"                 "Harpagornis incendei"
+ [5] "Papilio multicaudata" "Oncorhynchus gilae"   "Bassariscus"          "Crotalus willardi"   
+ [9] "Maricopa"             "Peoria"

@@ -1,0 +1,14 @@
+Scraped
+
+[1] "Populus"               
+ "Mimus polyglottos"      
+"Speyeria diana"        
+ "Pyrus malus"           
+ "Solanum lycopersicum"  
+ [6] "Oryza"                 
+ "Vitis aestivalis"      
+ "Apis mellifera"         
+"Odocoileus virginianus" 
+"Carya illinoinensis"   
+[11] "Pinus taeda"            
+"Ouachita"
