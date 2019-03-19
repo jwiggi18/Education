@@ -1,12 +1,15 @@
 library(shiny)
-
 library(rphylotastic)
 
 
-mams <- c("Hippopotamus amphibius", "Trichechus manatus", "Tursiops truncatus", "Equus caballus", "Canis lupus", "Pan troglodytes", "Panthera leo")
-mams_tree <- rphylotastic::taxa_get_otol_tree(taxa = mams)
+Mammals <- c("Hippopotamus amphibius", "Trichechus manatus", "Tursiops truncatus", "Equus caballus", "Canis lupus", "Pan troglodytes", "Panthera leo")
+#mams_tree <- rphylotastic::taxa_get_otol_tree(taxa = mams)
 
+Amphibians <- c("Caecilia thompsoni", "Dendrobates leucomelas", "Ambystoma tigrinum")
 
+getTree <- function(taxa) {
+  rphylotastic::taxa_get_otol_tree(taxa)
+}
 
 
 groups_list <- c("Mammals", "Dinosaurs", "Amphibians", "Echinoderms", "Mollusks")
@@ -19,7 +22,7 @@ ui <- fluidPage(theme = shinythemes::shinytheme("journal"),
     fluidRow(
       column(4, align="center",
         selectInput("group", "Choose a group:",
-          choices = groups_list, multiple = FALSE)
+          choices = groups_list, selected = "Mammals", multiple = FALSE)
         )
       ),
 
@@ -27,7 +30,19 @@ ui <- fluidPage(theme = shinythemes::shinytheme("journal"),
 )
 
 server <- function(input, output) {
-  output$tree <- renderPlot({ape::plot.phylo(mams_tree)})
-}
+  #output$tree <- renderPlot({ape::plot.phylo(mams_tree)})
+  #output$tree <- renderPlot({
+    #tree <- getTree(taxa = Mammals)
+    #ape::plot.phylo(tree)
+  #})
+  rGroups <- reactive({
+    input$groups
+  })
+
+  output$tree <- renderPlot({
+    gTree <- (getTree(taxa = rGroups)
+    ape::plot.phylo(gTree))
+  })
+
 
 shinyApp(ui = ui, server = server)
