@@ -43,15 +43,23 @@ server <- function(input, output) {
   output$tree <- renderPlot({
     if (input$group == "Mammals") {
       ape::plot.phylo(mams_tree)
+      ape::axisPhylo()
+      mtext("Time (MYA)", side = 1, line = 2, cex = 0.75)
     }
     if (input$group == "Amphibians") {
       ape::plot.phylo(amph_tree)
+      ape::axisPhylo()
+      mtext("Time (MYA)", side = 1, line = 2, cex = 0.75)
     }
     if (input$group == "Echinoderms") {
       ape::plot.phylo(ech_tree)
+      ape::axisPhylo()
+      mtext("Time (MYA)", side = 1, line = 2, cex = 0.75)
     }
     if (input$group == "Mollusks") {
       ape::plot.phylo(mol_tree)
+      ape::axisPhylo()
+      mtext("Time (MYA)", side = 1, line = 2, cex = 0.75)
     }
   })
 }
