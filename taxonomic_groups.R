@@ -32,9 +32,9 @@ server <- function(input, output) {
   mams_tree <- getTree(Mammals)
   mams_plot <- ape::plot.phylo(mams_tree)
 
-  Amphibians <- c("Caecilia thompsoni", "Rhinella marina", "Hyloxalus abditaurantius", "Rhacophorus nigropalmatus", "Ambystoma tigrinum")
-  amph_tree <- getTree(Amphibians)
-  amph_plot <- ape::plot.phylo(amph_tree)
+  #Amphibians <- c("Caecilia thompsoni", "Rhinella marina", "Hyloxalus abditaurantius", "Rhacophorus nigropalmatus", "Ambystoma tigrinum")
+  #amph_tree <- getTree(Amphibians)
+  #amph_plot <- ape::plot.phylo(amph_tree)
 
   Echinoderms <- c("Pisaster ochraceus", "Mesocentrotus franciscanus", "Echinarachnius parma", "Cucumaria miniata")
   ech_tree <- getTree(Echinoderms)
@@ -43,18 +43,21 @@ server <- function(input, output) {
   Mollusks <- c("Glaucus atlanticus", "Cornu aspersum", "Sepia officinalis", "Octopus vulgaris", "Bithynia tentaculata")
   mol_tree <- getTree(Mollusks)
   mol_plot <- ape::plot.phylo(mol_tree)
-  
-  output$tree <- renderPlot({
 
-      if (input$groups == "Mammals") {print(mams_plot)}
-
-      if (input$groups == "Amphibians") {print(amph_plot)}
-
-      if (input$groups == "Echinoderms") {print(ech_plot)}
-
-      if (input$groups == "Mollusks") {print(mol_plot)}
-
-    })
+  p <- reactive({
+    if (input$groups == "Mammals") {
+      return(mams_plot)
+    }
+    #else if (input$groups == "Amphibians") {
+    #  return(amph_plot)
+    #}
+    #else if (input$groups == "Echinoderms") {
+    #  return(ech_plot)
+    #}
+    #else (input$groups == "Mollusks") {
+    #  return(mol_plot)}
+  })
+  output$tree <- renderPlot({p()})
 
 }
 
