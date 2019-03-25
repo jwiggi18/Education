@@ -8,18 +8,6 @@ getTree <- function(taxa) {
   rphylotastic::taxa_get_otol_tree(taxa)
 }
 
-Mammals <- c("Hippopotamus amphibius", "Trichechus manatus", "Tursiops truncatus", "Equus caballus", "Canis lupus", "Pan troglodytes", "Panthera leo")
-mams_tree <- getTree(Mammals)
-
-Amphibians <- c("Caecilia thompsoni", "Rhinella marina", "Hyloxalus abditaurantius", "Rhacophorus nigropalmatus", "Ambystoma tigrinum")
-amph_tree <- getTree(Amphibians)
-
-Echinoderms <- c("Pisaster ochraceus", "Mesocentrotus franciscanus", "Echinarachnius parma", "Cucumaria miniata")
-ech_tree <- getTree(Echinoderms)
-
-Mollusks <- c("Glaucus atlanticus", "Cornu aspersum", "Sepia officinalis", "Octopus vulgaris", "Bithynia tentaculata")
-mol_tree <- getTree(Mollusks)
-
 
 ui <- fluidPage(theme = shinythemes::shinytheme("journal"),
   #app title
@@ -27,7 +15,7 @@ ui <- fluidPage(theme = shinythemes::shinytheme("journal"),
 
     #input: Groups students can choose from
     fluidRow(
-        column(4, align="center",
+        column(4,
             selectInput("group", "Choose a group:",
               choices = c("Mammals", "Amphibians", "Echinoderms", "Mollusks"),
               multiple = FALSE)
@@ -40,16 +28,31 @@ ui <- fluidPage(theme = shinythemes::shinytheme("journal"),
 
 server <- function(input, output) {
 
+  Mammals <- c("Hippopotamus amphibius", "Trichechus manatus", "Tursiops truncatus", "Equus caballus", "Canis lupus", "Pan troglodytes", "Panthera leo")
+  mams_tree <- getTree(Mammals)
+  mams_plot <- ape::plot.phylo(mams_tree)
 
+  Amphibians <- c("Caecilia thompsoni", "Rhinella marina", "Hyloxalus abditaurantius", "Rhacophorus nigropalmatus", "Ambystoma tigrinum")
+  amph_tree <- getTree(Amphibians)
+  amph_plot <- ape::plot.phylo(amph_tree)
+
+  Echinoderms <- c("Pisaster ochraceus", "Mesocentrotus franciscanus", "Echinarachnius parma", "Cucumaria miniata")
+  ech_tree <- getTree(Echinoderms)
+  ech_plot <- ape::plot.phylo(ech_tree)
+
+  Mollusks <- c("Glaucus atlanticus", "Cornu aspersum", "Sepia officinalis", "Octopus vulgaris", "Bithynia tentaculata")
+  mol_tree <- getTree(Mollusks)
+  mol_plot <- ape::plot.phylo(mol_tree)
+  
   output$tree <- renderPlot({
 
-      if (input$groups == "Mammals") {ape::plot.phylo(mams_tree)}
+      if (input$groups == "Mammals") {print(mams_plot)}
 
-      else if (input$groups == "Amphibians") {ape::plot.phylo(amph_tree)}
+      if (input$groups == "Amphibians") {print(amph_plot)}
 
-      else if (input$groups == "Echinoderms") {ape::plot.phylo(ech_tree)}
+      if (input$groups == "Echinoderms") {print(ech_plot)}
 
-      else {ape::plot.phylo(mol_tree)}
+      if (input$groups == "Mollusks") {print(mol_plot)}
 
     })
 
