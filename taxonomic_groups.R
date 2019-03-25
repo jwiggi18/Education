@@ -31,9 +31,8 @@ server <- function(input, output) {
   Mammals <- c("Hippopotamus amphibius", "Trichechus manatus", "Tursiops truncatus", "Equus caballus", "Canis lupus", "Pan troglodytes", "Panthera leo")
   mams_tree <- getTree(Mammals)
 
-  #Amphibians <- c("Caecilia thompsoni", "Rhinella marina", "Hyloxalus abditaurantius", "Rhacophorus nigropalmatus", "Ambystoma tigrinum")
-  #amph_tree <- getTree(Amphibians)
-  #amph_plot <-
+  Amphibians <- c("Caecilia thompsoni", "Rhinella marina", "Hyloxalus abditaurantius", "Rhacophorus nigropalmatus", "Ambystoma tigrinum")
+  amph_tree <- getTree(Amphibians)
 
   Echinoderms <- c("Pisaster ochraceus", "Mesocentrotus franciscanus", "Echinarachnius parma", "Cucumaria miniata")
   ech_tree <- getTree(Echinoderms)
