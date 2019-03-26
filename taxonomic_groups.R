@@ -2,12 +2,15 @@ library(shiny)
 library(rphylotastic)
 library(shinythemes)
 library(ape)
+library(phylotools)
 
 # function to get tree
 getTree <- function(taxa) {
   rphylotastic::taxa_get_otol_tree(taxa)
 }
 
+mam_common <- c("Hippopotamus (Hippopotamus amphibius)", "West Indian manatee (Trichechus manatus)", "Bottlenose dolphin (Tursiops truncatus)", "Horse (Equus caballus)", "Wolf (Canis lupus)", "Chimpanzee (Pan troglodytes)", "Lion (Panthera leo)")
+mams_df <- data.frame(Mammals, mam_common)
 
 ui <- fluidPage(theme = shinythemes::shinytheme("journal"),
   #app title
@@ -30,6 +33,7 @@ server <- function(input, output) {
 
   Mammals <- c("Hippopotamus amphibius", "Trichechus manatus", "Tursiops truncatus", "Equus caballus", "Canis lupus", "Pan troglodytes", "Panthera leo")
   mams_tree <- getTree(Mammals)
+  phylotools::sub.tip.label(mams_tree, mams_df)
 
   Amphibians <- c("Caecilia thompsoni", "Rhinella marina", "Hyloxalus abditaurantius", "Rhacophorus nigropalmatus", "Ambystoma tigrinum")
   amph_tree <- getTree(Amphibians)
